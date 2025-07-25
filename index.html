@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Sistema de estoque</title>
+</head>
+<body class="bg-body-secondary">
+    <header>
+        <nav class="navbar justify-content-center mb-5">
+            <div>
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Cadastro de produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/paginas/fluxo_estoque.html">Registrar entrada e saída</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">Gestão de estoque</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">Relatórios</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="d-flex justify-content-center">
+            <div class="d-flex bg-body p-5 rounded-5 w-40 justify-content-center">
+                <form action="">
+                    <h3 class="mb-3">Cadastro de produto</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="nome_produto">Nome</label>
+                            <input class="form-control-sm mb-2" id="nome_produto" type="text"><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="descricao_produto">Descrição</label>
+                            <input class="form-control-sm mb-2" id="descricao_produto" type="text"><br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="categoria_produto">Categoria</label>
+                            <input class="form-control-sm mb-2" id="categoria_produto" type="text"><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="unidade_medida">Unidade de medida</label>
+                            <input class="form-control-sm mb-2" id="unidade_medida" type="text"><br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="preco_produto">Preço</label>
+                            <input class="form-control-sm mb-2" id="preco_produto" type="number"><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="fornecedor">Fornecedor</label>
+                            <input class="form-control-sm" id="fornecedor" type="text">
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary btn-lg w-75" type="submit">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>

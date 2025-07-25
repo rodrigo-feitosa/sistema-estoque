@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilo.css">
+    <title>Sistema de estoque</title>
+</head>
+<body class="bg-body-secondary">
+    <header>
+        <nav class="navbar justify-content-center mb-5">
+            <div>
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Cadastro de produtos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/paginas/fluxo_estoque.html">Registrar entrada e saída</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/paginas/gestao_estoque.html">Gestão de estoque</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/paginas/relatorios.html">Relatórios</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="d-flex justify-content-center mb-5">
+            <div class="d-flex bg-body p-5 rounded-5 w-40 justify-content-center">
+                <form action="">
+                    <h3 class="mb-3">Registrar Entrada</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="nome_produto">Nome do produto</label>
+                            <input class="form-control-sm mb-2" id="nome_produto" type="text"><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="quantidade_produto">Quantidade</label>
+                            <input class="form-control-sm mb-2" id="quantidade_produto" type="text"><br>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-success btn-lg w-75" type="submit">Registrar entrada</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="d-flex justify-content-center">
+            <div class="d-flex bg-body p-5 rounded-5 w-40 justify-content-center">
+                <form action="">
+                    <h3 class="mb-3">Registrar Saída</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="nome_produto">Nome do produto</label>
+                            <input class="form-control-sm mb-2" id="nome_produto" type="text"><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="quantidade_produto">Quantidade</label>
+                            <input class="form-control-sm mb-2" id="quantidade_produto" type="text"><br>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-danger btn-lg w-75" type="submit">Registrar saída</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>
