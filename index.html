@@ -24,42 +24,42 @@
     <main>
         <section class="d-flex justify-content-center">
             <div class="d-flex bg-body p-5 rounded-5 w-40 justify-content-center">
-                <form action="">
+                <form id="formProduto">
                     <h3 class="mb-3">Cadastro de produto</h3>
                     <div class="row">
                         <div class="col-6">
                             <label for="nome_produto">Nome</label>
-                            <input class="form-control-sm mb-2" id="nome_produto" type="text"><br>
+                            <input class="form-control-sm mb-2" id="nome_produto" name="nome_produto" type="text"><br>
                         </div>
                         <div class="col-6">
                             <label for="descricao_produto">Descrição</label>
-                            <input class="form-control-sm mb-2" id="descricao_produto" type="text"><br>
+                            <input class="form-control-sm mb-2" id="descricao_produto" name="descricao_produto" type="text"><br>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-6">
                             <label for="categoria_produto">Categoria</label>
-                            <input class="form-control-sm mb-2" id="categoria_produto" type="text"><br>
+                            <input class="form-control-sm mb-2" id="categoria_produto" name="categoria_produto" type="text"><br>
                         </div>
                         <div class="col-6">
                             <label for="unidade_medida">Unidade de medida</label>
-                            <input class="form-control-sm mb-2" id="unidade_medida" type="text"><br>
+                            <input class="form-control-sm mb-2" id="unidade_medida" name="unidade_medida" type="text"><br>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-6">
                             <label for="preco_produto">Preço</label>
-                            <input class="form-control-sm mb-2" id="preco_produto" type="number"><br>
+                            <input class="form-control-sm mb-2" id="preco_produto" name="preco_produto" type="number"><br>
                         </div>
                         <div class="col-6">
                             <label for="fornecedor">Fornecedor</label>
-                            <input class="form-control-sm" id="fornecedor" type="text">
+                            <input class="form-control-sm" id="fornecedor" name="fornecedor" type="text">
                         </div>
                     </div>
                     <div class="text-center mt-3">
-                        <button class="btn btn-primary btn-lg w-75" type="submit">Cadastrar</button>
+                        <button class="btn btn-primary btn-lg w-75">Cadastrar</button>
                     </div>
                 </form>
             </div>
@@ -69,5 +69,7 @@
     <footer>
 
     </footer>
+
+    <script src="./js/script.js"></script>
 </body>
 </html>
