@@ -1,5 +1,5 @@
 class Produto {
-    constructor() {
+    constructor(nome, descricao, categoria, unidade_medida, preco, fornecedor) {
         this.nome = document.getElementById('nome_produto').value;
         this.descricao = document.getElementById('descricao_produto').value;
         this.categoria = document.getElementById('categoria_produto').value;
@@ -18,7 +18,7 @@ class Produto {
             fornecedor: this.fornecedor
         };
 
-        const resposta = await fetch('./backend/index.php', {
+        const resposta = await fetch('./backend/produtos.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
