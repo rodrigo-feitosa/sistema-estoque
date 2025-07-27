@@ -14,6 +14,11 @@ class Produtos {
     public function cadastrarProduto() {
         $dados = json_decode(file_get_contents("php://input"), true);
 
+        if (!$dados) {
+            echo json_encode(['mensagem' => 'Dados inválidos.']);
+            return;
+        }
+
         $sql = "INSERT INTO produtos (nome, descricao, categoria, unidade_medida, preco, fornecedor)
                 VALUES (:nome, :descricao, :categoria, :unidade_medida, :preco, :fornecedor)";
 
@@ -32,7 +37,7 @@ class Produtos {
     }
 
     public function listarProdutos() {
-        $sql = "SELECT * FROM produtos ORDER BY id DESC";
+        $sql = "SELECT id_produto AS id, nome, descricao, categoria, unidade_medida, preco, fornecedor FROM produtos ORDER BY id_produto DESC";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
         $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,8 +46,15 @@ class Produtos {
     }
 }
 
-// Cria a instância da classe Produtos
+header('Content-Type: application/json');
+
 $produto = new Produtos($pdo);
 
-// Chama o método para cadastrar produto
-$produto->cadastrarProduto();
+// Verifica o tipo de requisição
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $produto->cadastrarProduto();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $produto->listarProdutos();
+} else {
+    echo json_encode(['mensagem' => 'Método não suportado.']);
+}
