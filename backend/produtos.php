@@ -59,6 +59,31 @@ class Produtos {
         }
     }
 
+    public function editarProduto($dados) {
+        $sql = "UPDATE produtos SET 
+                    nome = :nome,
+                    descricao = :descricao,
+                    categoria = :categoria,
+                    unidade_medida = :unidade_medida,
+                    preco = :preco,
+                    fornecedor = :fornecedor
+                WHERE id_produto = :id_produto";
+
+        $stmt = $this->conexao->prepare($sql);
+
+        $stmt->bindParam(':nome', $dados['nome']);
+        $stmt->bindParam(':descricao', $dados['descricao']);
+        $stmt->bindParam(':categoria', $dados['categoria']);
+        $stmt->bindParam(':unidade_medida', $dados['unidade_medida']);
+        $stmt->bindParam(':preco', $dados['preco']);
+        $stmt->bindParam(':fornecedor', $dados['fornecedor']);
+        $stmt->bindParam(':id_produto', $dados['id_produto']);
+
+        $stmt->execute();
+
+        echo json_encode(['mensagem' => 'Produto atualizado com sucesso!']);
+    }
+
 }
 
 header('Content-Type: application/json');
@@ -70,9 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = $dados['action'] ?? null;
 
     if ($acao === 'excluir') {
-        $produto->excluirProduto($id);
+        $produto->excluirProduto();
+    } elseif ($acao === 'editar') {
+        $produto->editarProduto($dados);
     } else {
-        $produto->cadastrarProduto();
+        $produto->cadastrarProduto($dados);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $produto->listarProdutos();
