@@ -19,8 +19,8 @@ class Produtos {
             return;
         }
 
-        $sql = "INSERT INTO produtos (nome, descricao, categoria, unidade_medida, preco, fornecedor)
-                VALUES (:nome, :descricao, :categoria, :unidade_medida, :preco, :fornecedor)";
+        $sql = "INSERT INTO produtos (nome, descricao, categoria, unidade_medida, preco, qtd_estoque, fornecedor)
+                VALUES (:nome, :descricao, :categoria, :unidade_medida, :preco, 0,:fornecedor)";
 
         $stmt = $this->conexao->prepare($sql);
 
@@ -29,6 +29,7 @@ class Produtos {
         $stmt->bindParam(':categoria', $dados['categoria']);
         $stmt->bindParam(':unidade_medida', $dados['unidade_medida']);
         $stmt->bindParam(':preco', $dados['preco']);
+        //$stmt->bindParam(':quantidade', $dados['quantidade']);
         $stmt->bindParam(':fornecedor', $dados['fornecedor']);
 
         $stmt->execute();
@@ -37,7 +38,7 @@ class Produtos {
     }
 
     public function listarProdutos() {
-        $sql = "SELECT id_produto AS id, nome, descricao, categoria, unidade_medida, preco, fornecedor FROM produtos ORDER BY id_produto DESC";
+        $sql = "SELECT id_produto, nome, descricao, categoria, unidade_medida, preco, qtd_estoque, fornecedor FROM produtos ORDER BY id_produto DESC";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
         $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);

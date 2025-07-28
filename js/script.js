@@ -15,10 +15,11 @@ class Produto {
             categoria: this.categoria,
             unidade_medida: this.unidade_medida,
             preco: this.preco,
+            quantidade: this.quantidade,
             fornecedor: this.fornecedor
         };
 
-        return fetch('./backend/produtos.php', {
+        return fetch('../sistema-estoque/backend/produtos.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -49,10 +50,12 @@ class Produto {
                         <td>${produto.categoria}</td>
                         <td>${produto.unidade_medida}</td>
                         <td>${produto.preco}</td>
+                        <td>${produto.qtd_estoque}</td>
                         <td>${produto.fornecedor}</td>
                     `;
 
                     corpoTabela.appendChild(linha);
+                    
                 });
             })
             .catch(erro => {
@@ -63,19 +66,19 @@ class Produto {
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formProduto');
-    const produto = new Produto();
+    const tabela = document.getElementById('tabelaProdutos');
 
     if (form) {
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             const novoProduto = new Produto();
             novoProduto.cadastrarProduto().then(() => {
-                novoProduto.listarProdutos();
                 form.reset();
             });
         });
     }
-
-    // Exibir lista ao carregar a página
-    produto.listarProdutos();
+    if (tabela) {
+        const produtoLista = new Produto();
+        produtoLista.listarProdutos();
+    }
 });
