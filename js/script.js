@@ -52,7 +52,17 @@ class Produto {
                         <td>${produto.preco}</td>
                         <td>${produto.qtd_estoque}</td>
                         <td>${produto.fornecedor}</td>
+                        <td>
+                            <button class="btn btn-danger btn-excluir-produto" data-id="${produto.id_produto}">Excluir</button>
+                            <button class="btn btn-primary btn-editar-produto" data-id="${produto.id_produto}">Editar</button>
+                        </td>
                     `;
+
+                    linha.querySelector('.btn-excluir-produto').addEventListener('click', (event) => {
+                        const id = event.target.getAttribute('data-id');
+                        const p = new Produto();
+                        p.excluirProduto(id);
+                    });
 
                     corpoTabela.appendChild(linha);
                     
@@ -61,6 +71,26 @@ class Produto {
             .catch(erro => {
                 console.error('Erro ao listar produtos:', erro);
             });
+    }
+
+    excluirProduto(id) {
+        if(confirm("Tem certeza que deseja excluir esse produto?")) {
+            fetch("../backend/produtos.php", {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'excluir', id_produto: id })
+            })
+            .then(resposta => resposta.json())
+            .then(resultado => {
+                alert(resultado.mensagem);
+                this.listarProdutos()
+            })
+            .catch(erro =>  {
+                console.error('Erro ao excluir produto', erro);
+            });
+        }
     }
 }
 
