@@ -45,12 +45,11 @@ class Produtos {
     }
 
     public function excluirProduto() {
-        // Lê o JSON recebido
         $dados = json_decode(file_get_contents("php://input"), true);
         $id_produto = $dados['id_produto'] ?? null;
 
         if ($id_produto) {
-            $stmt = $pdo->prepare("DELETE FROM produtos WHERE id_produto = ?");
+            $stmt = $this->conexao->prepare("DELETE FROM produtos WHERE id_produto = ?");
             $stmt->execute([$id_produto]);
 
             echo json_encode(['mensagem' => 'Produto excluído com sucesso.']);
@@ -59,6 +58,7 @@ class Produtos {
             echo json_encode(['mensagem' => 'ID do produto não fornecido.']);
         }
     }
+
 }
 
 header('Content-Type: application/json');
@@ -70,9 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $acao = $dados['action'] ?? null;
 
     if ($acao === 'excluir') {
-        $produto->excluirProduto($dados);
+        $produto->excluirProduto($id);
     } else {
-        $produto->cadastrarProduto($dados);
+        $produto->cadastrarProduto();
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $produto->listarProdutos();
