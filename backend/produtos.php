@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require 'conexao_db.php';
 
 $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
@@ -92,13 +96,25 @@ class Produtos {
         $sql = "UPDATE produtos SET qtd_estoque = qtd_estoque + :valor WHERE id_produto = :id_produto";
 
         $stmt = $this->conexao->prepare($sql);
-        $stmt->bindParam(':id_produto', $dados['id_produto'], PDO::PARAM_INT);
-        $stmt->bindParam(':valor', $dados['quantidade'], PDO::PARAM_INT);
-
+        $stmt->bindParam(':id_produto', $dados['id_produto']);
+        $stmt->bindParam(':valor', $dados['quantidade']);
         $stmt->execute();
+
+        $this->registrarFluxoEntrada($dados['id_produto'], $dados['quantidade']);
 
         echo json_encode(['mensagem' => 'Entrada realizada com sucesso!']);
     }
+
+    public function registrarFluxoEntrada($id_produto, $quantidade) {
+        $sql = "INSERT INTO historico_fluxos (id_produto, tipo_transacao, quantidade, data_transacao) 
+                VALUES (:id_produto, 'entrada', :quantidade, NOW())";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindParam(':id_produto', $id_produto);
+        $stmt->bindParam(':quantidade', $quantidade);
+        $stmt->execute();
+    }
+
 
     public function registrarSaida ($dados) {
         if (!$dados) {
@@ -111,10 +127,21 @@ class Produtos {
         $stmt = $this->conexao->prepare($sql);
         $stmt->bindParam(':id_produto', $dados['id_produto'], PDO::PARAM_INT);
         $stmt->bindParam(':valor', $dados['quantidade'], PDO::PARAM_INT);
-
         $stmt->execute();
 
+        $this->registrarFluxoSaida($dados['id_produto'], $dados['quantidade']);
+
         echo json_encode(['mensagem' => 'Saida realizada com sucesso!']);
+    }
+
+    public function registrarFluxoSaida($id_produto, $quantidade) {
+        $sql = "INSERT INTO historico_fluxos (id_produto, tipo_transacao, quantidade, data_transacao) 
+                VALUES (:id_produto, 'saida', :quantidade, NOW())";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindParam(':id_produto', $id_produto);
+        $stmt->bindParam(':quantidade', $quantidade);
+        $stmt->execute();
     }
 }
 
