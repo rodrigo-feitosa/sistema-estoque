@@ -28,34 +28,35 @@
                     <h3 class="mb-3">Cadastro de produto</h3>
                     <div class="row">
                         <div class="col-6">
-                            <label for="nome_produto">Nome</label>
-                            <input class="form-control-sm mb-2" id="nome_produto" name="nome_produto" type="text"><br>
+                            <label class="form-label" for="nome_produto">Nome</label>
+                            <input class="form-control form-control-sm" id="nome_produto" name="nome_produto" type="text"><br>
                         </div>
                         <div class="col-6">
-                            <label for="descricao_produto">Descrição</label>
-                            <input class="form-control-sm mb-2" id="descricao_produto" name="descricao_produto" type="text"><br>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label for="categoria_produto">Categoria</label>
-                            <input class="form-control-sm mb-2" id="categoria_produto" name="categoria_produto" type="text"><br>
-                        </div>
-                        <div class="col-6">
-                            <label for="unidade_medida">Unidade de medida</label>
-                            <input class="form-control-sm mb-2" id="unidade_medida" name="unidade_medida" type="text"><br>
+                            <label class="form-label" for="descricao_produto">Descrição</label>
+                            <input class="form-control form-control-sm" id="descricao_produto" name="descricao_produto" type="text"><br>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-6">
-                            <label for="preco_produto">Preço</label>
-                            <input class="form-control-sm mb-2" id="preco_produto" name="preco_produto" type="number"><br>
+                            <label class="form-label" for="categoria_produto">Categoria</label>
+                            <select class="form-control form-select form-select-sm" id="categoria_produto" name="categoria_produto">
+                            </select>
                         </div>
                         <div class="col-6">
-                            <label for="fornecedor">Fornecedor</label>
-                            <input class="form-control-sm" id="fornecedor" name="fornecedor" type="text">
+                            <label class="form-label" for="unidade_medida">Unidade de medida</label>
+                            <input class="form-control form-control-sm" id="unidade_medida" name="unidade_medida" type="text"><br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="form-label" for="preco_produto">Preço</label>
+                            <input class="form-control form-control form-control-sm" id="preco_produto" name="preco_produto" type="number"><br>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label" for="fornecedor">Fornecedor</label>
+                            <input class="form-control form-control-sm" id="fornecedor" name="fornecedor" type="text">
                         </div>
                     </div>
                     <div class="text-center mt-3">
@@ -71,5 +72,6 @@
     </footer>
 
     <script src="./js/script.js"></script>
+    <script src="./js/categorias.js"></script>
 </body>
 </html>

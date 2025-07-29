@@ -19,7 +19,7 @@ class Produto {
             fornecedor: this.fornecedor
         };
 
-        return fetch('../sistema-estoque/backend/produtos.php', {
+        return fetch('backend/produtos.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -94,7 +94,7 @@ class Produto {
 
     excluirProduto(id) {
         if(confirm("Tem certeza que deseja excluir esse produto?")) {
-            fetch("../backend/produtos.php", {
+            fetch('../backend/produtos.php', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
