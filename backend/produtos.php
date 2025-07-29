@@ -34,7 +34,6 @@ class Produtos {
         echo json_encode(['mensagem' => 'Produto cadastrado com sucesso!']);
     }
 
-
     public function listarProdutos() {
         $sql = "SELECT id_produto, nome, descricao, categoria, unidade_medida, preco, qtd_estoque, fornecedor FROM produtos ORDER BY id_produto DESC";
         $stmt = $this->conexao->prepare($sql);
