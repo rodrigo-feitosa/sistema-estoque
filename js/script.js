@@ -75,6 +75,32 @@ class Produto {
         return linha;
     }
 
+    async preencherSelectProdutos(selectId) {
+        try {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php');
+            const produtos = await resposta.json();
+
+            const select = document.getElementById(selectId);
+            if (!select) {
+                console.warn(`Elemento select com id '${selectId}' não encontrado.`);
+                return;
+            }
+
+            // Limpa o select antes de preencher
+            select.innerHTML = '<option value="">Selecione um produto</option>';
+
+            produtos.forEach(produto => {
+                const option = document.createElement('option');
+                option.value = produto.id_produto;
+                option.textContent = produto.nome;
+                select.appendChild(option);
+            });
+        } catch (erro) {
+            console.error('Erro ao preencher select com produtos:', erro);
+        }
+    }
+
+
     abrirModalEdicao(produto) {
         document.getElementById('id_produto').value = produto.id_produto;
         document.getElementById('nome_produto').value = produto.nome;
@@ -144,6 +170,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnEditar = document.getElementById('btnSalvarEdicao');
     const produto = new Produto();
     const corpoTabelaProdutos = document.getElementById('corpoTabelaProdutos');
+    const selectProdutoEntrada = document.getElementById('select_produto_entrada');
+    const selectProdutoSaida = document.getElementById('select_produto_saida');
 
     if (form) {
         form.addEventListener('submit', async (event) => {
@@ -173,5 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const produtoEdicao = new Produto();
             await produtoEdicao.editarProduto(id);
         });
+    }
+
+    if (selectProdutoEntrada) {
+        produto.preencherSelectProdutos('select_produto_entrada');
+    }
+    if (selectProdutoSaida) {
+        produto.preencherSelectProdutos('select_produto_saida');
     }
 });
