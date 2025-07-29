@@ -31,6 +31,6 @@ class Categorias {
 
 document.addEventListener('DOMContentLoaded', () => {
     const categoria = new Categorias();
-    categoria.listarCategorias('/sistema-estoque/backend/categorias.php', 'categoria_produto');
+    categoria.listarCategorias('/sistema-estoque/backend/categorias.php', 'categoriaProduto');
     categoria.carregarCategorias();
 });
