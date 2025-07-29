@@ -1,5 +1,5 @@
 class Categorias {
-    constructor(endpoint, selectId) {
+    listarCategorias(endpoint, selectId) {
         this.endpoint = endpoint;
         this.selectElement = document.getElementById(selectId);
     }
@@ -30,6 +30,7 @@ class Categorias {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const categoria = new Categorias('/sistema-estoque/backend/categorias.php', 'categoria_produto');
+    const categoria = new Categorias();
+    categoria.listarCategorias('/sistema-estoque/backend/categorias.php', 'categoria_produto');
     categoria.carregarCategorias();
 });
