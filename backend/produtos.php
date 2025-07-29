@@ -100,6 +100,23 @@ class Produtos {
 
         echo json_encode(['mensagem' => 'Entrada realizada com sucesso!']);
     }
+
+    public function registrarSaida ($dados) {
+        if (!$dados) {
+            echo json_encode(['mensagem' => 'Dados inválidos.']);
+            return;
+        }
+
+        $sql = "UPDATE produtos SET qtd_estoque = qtd_estoque - :valor WHERE id_produto = :id_produto";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindParam(':id_produto', $dados['id_produto'], PDO::PARAM_INT);
+        $stmt->bindParam(':valor', $dados['quantidade'], PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        echo json_encode(['mensagem' => 'Saida realizada com sucesso!']);
+    }
 }
 
 header('Content-Type: application/json');
@@ -116,7 +133,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $produto->editarProduto($dados);
     } elseif ($acao === 'entrada') {
         $produto->registrarEntrada($dados);
-    } else {
+    } elseif ($acao === 'saida'){
+        $produto->registrarSaida($dados);   
+    }else {
         $produto->cadastrarProduto($dados);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {

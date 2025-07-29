@@ -122,6 +122,28 @@ class Produto {
         }
     }
 
+    async registrarSaida() {
+        const dados = {
+            action: 'saida',
+            id_produto: this.id_produto,
+            quantidade: this.quantidade
+        };
+
+        try {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await resposta.json();
+            alert(resultado.mensagem || 'Operação finalizada.');
+        } catch (erro) {
+            console.error('Erro ao registrar saída:', erro);
+            alert('Erro ao registrar saída no estoque.');
+        }
+    }
+
 
     abrirModalEdicao(produto) {
         document.getElementById('idProduto').value = produto.id_produto;
@@ -195,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectProdutoEntrada = document.getElementById('selectProdutoEntrada');
     const selectProdutoSaida = document.getElementById('selectProdutoSaida');
     const formEntrada = document.getElementById('formEntrada');
+    const formSaida = document.getElementById('formSaida');
 
     if (form) {
         form.addEventListener('submit', async (event) => {
@@ -239,10 +262,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const novaQuantidade = new Produto();
             novaQuantidade.id_produto = document.getElementById('selectProdutoEntrada')?.value;
-            novaQuantidade.quantidade = document.getElementById('quantidadeProduto')?.value;
+            novaQuantidade.quantidade = document.getElementById('quantidadeProdutoEntrada')?.value;
 
             await novaQuantidade.registrarEntrada();
             formEntrada.reset();
+        });
+    }
+
+    if (formSaida) {
+        formSaida.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const novaQuantidade = new Produto();
+            novaQuantidade.id_produto = document.getElementById('selectProdutoSaida')?.value;
+            novaQuantidade.quantidade = document.getElementById('quantidadeProdutoSaida')?.value;
+
+            await novaQuantidade.registrarSaida();
+            formSaida.reset();
         });
     }
 });
