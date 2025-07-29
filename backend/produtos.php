@@ -84,6 +84,22 @@ class Produtos {
         echo json_encode(['mensagem' => 'Produto atualizado com sucesso!']);
     }
 
+    public function registrarEntrada ($dados) {
+        if (!$dados) {
+            echo json_encode(['mensagem' => 'Dados inválidos.']);
+            return;
+        }
+
+        $sql = "UPDATE produtos SET qtd_estoque = qtd_estoque + :valor WHERE id_produto = :id_produto";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindParam(':id_produto', $dados['id_produto'], PDO::PARAM_INT);
+        $stmt->bindParam(':valor', $dados['quantidade'], PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        echo json_encode(['mensagem' => 'Entrada realizada com sucesso!']);
+    }
 }
 
 header('Content-Type: application/json');
@@ -98,6 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $produto->excluirProduto();
     } elseif ($acao === 'editar') {
         $produto->editarProduto($dados);
+    } elseif ($acao === 'entrada') {
+        $produto->registrarEntrada($dados);
     } else {
         $produto->cadastrarProduto($dados);
     }

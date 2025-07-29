@@ -100,14 +100,36 @@ class Produto {
         }
     }
 
+    async registrarEntrada() {
+        const dados = {
+            action: 'entrada',
+            id_produto: this.id_produto,
+            quantidade: this.quantidade
+        };
+
+        try {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await resposta.json();
+            alert(resultado.mensagem || 'Operação finalizada.');
+        } catch (erro) {
+            console.error('Erro ao registrar entrada:', erro);
+            alert('Erro ao registrar entrada no estoque.');
+        }
+    }
+
 
     abrirModalEdicao(produto) {
-        document.getElementById('id_produto').value = produto.id_produto;
-        document.getElementById('nome_produto').value = produto.nome;
-        document.getElementById('descricao_produto').value = produto.descricao;
-        document.getElementById('categoria_produto').value = produto.categoria;
-        document.getElementById('unidade_medida').value = produto.unidade_medida;
-        document.getElementById('preco_produto').value = produto.preco;
+        document.getElementById('idProduto').value = produto.id_produto;
+        document.getElementById('nomeProduto').value = produto.nome;
+        document.getElementById('descricaoProduto').value = produto.descricao;
+        document.getElementById('categoriaProduto').value = produto.categoria;
+        document.getElementById('unidadeMedida').value = produto.unidade_medida;
+        document.getElementById('precoProduto').value = produto.preco;
         document.getElementById('fornecedor').value = produto.fornecedor;
 
         const modal = new bootstrap.Modal(document.getElementById('modalEditar'));
@@ -138,11 +160,11 @@ class Produto {
         const dados = {
             action: 'editar',
             id_produto: id,
-            nome: document.getElementById('nome_produto').value,
-            descricao: document.getElementById('descricao_produto').value,
-            categoria: document.getElementById('categoria_produto').value,
-            unidade_medida: document.getElementById('unidade_medida').value,
-            preco: document.getElementById('preco_produto').value,
+            nome: document.getElementById('nomeProduto').value,
+            descricao: document.getElementById('descricaoProduto').value,
+            categoria: document.getElementById('categoriaProduto').value,
+            unidade_medida: document.getElementById('unidadeMedida').value,
+            preco: document.getElementById('precoProduto').value,
             fornecedor: document.getElementById('fornecedor').value
         };
 
@@ -170,20 +192,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnEditar = document.getElementById('btnSalvarEdicao');
     const produto = new Produto();
     const corpoTabelaProdutos = document.getElementById('corpoTabelaProdutos');
-    const selectProdutoEntrada = document.getElementById('select_produto_entrada');
-    const selectProdutoSaida = document.getElementById('select_produto_saida');
+    const selectProdutoEntrada = document.getElementById('selectProdutoEntrada');
+    const selectProdutoSaida = document.getElementById('selectProdutoSaida');
+    const formEntrada = document.getElementById('formEntrada');
 
     if (form) {
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const novoProduto = new Produto();
-            novoProduto.nome = document.getElementById('nome_produto')?.value;
-            novoProduto.descricao = document.getElementById('descricao_produto')?.value;
-            novoProduto.categoria = document.getElementById('categoria_produto')?.value;
-            novoProduto.unidade_medida = document.getElementById('unidade_medida')?.value;
-            novoProduto.preco = document.getElementById('preco_produto')?.value;
-            novoProduto.quantidade = document.getElementById('quantidade_produto')?.value;
+            novoProduto.nome = document.getElementById('nomeProduto')?.value;
+            novoProduto.descricao = document.getElementById('descricaoProduto')?.value;
+            novoProduto.categoria = document.getElementById('categoriaProduto')?.value;
+            novoProduto.unidade_medida = document.getElementById('unidadeMedida')?.value;
+            novoProduto.preco = document.getElementById('precoProduto')?.value;
+            novoProduto.quantidade = document.getElementById('quantidadeProduto')?.value;
             novoProduto.fornecedor = document.getElementById('fornecedor')?.value;
 
             await novoProduto.cadastrarProduto();
@@ -197,16 +220,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnEditar) {
         btnEditar.addEventListener('click', async () => {
-            const id = document.getElementById('id_produto').value;
+            const id = document.getElementById('idProduto').value;
             const produtoEdicao = new Produto();
             await produtoEdicao.editarProduto(id);
         });
     }
 
     if (selectProdutoEntrada) {
-        produto.preencherSelectProdutos('select_produto_entrada');
+        produto.preencherSelectProdutos('selectProdutoEntrada');
     }
     if (selectProdutoSaida) {
-        produto.preencherSelectProdutos('select_produto_saida');
+        produto.preencherSelectProdutos('selectProdutoSaida');
+    }
+
+    if (formEntrada) {
+        formEntrada.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const novaQuantidade = new Produto();
+            novaQuantidade.id_produto = document.getElementById('selectProdutoEntrada')?.value;
+            novaQuantidade.quantidade = document.getElementById('quantidadeProduto')?.value;
+
+            await novaQuantidade.registrarEntrada();
+            formEntrada.reset();
+        });
     }
 });
