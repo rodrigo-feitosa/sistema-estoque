@@ -63,9 +63,23 @@
 
             echo json_encode($listaProdutosMaisVendidos);
         }
+
+        public function listarProdutosSemMovimentacao() {
+            $sql = "SELECT p.nome AS nome_produto
+                    FROM produtos p
+                    LEFT JOIN historico_fluxos hf ON p.id_produto = hf.id_produto
+                    WHERE hf.id_transacao IS NULL
+                    GROUP BY p.nome
+                    ORDER BY p.nome;";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $listaProdutosSemMovimentacao = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode($listaProdutosSemMovimentacao);
+        }
     }
 
-        $relatorio = new Relatorios($pdo);
+    $relatorio = new Relatorios($pdo);
 
     $acao = $_GET['acao'] ?? null;
 
@@ -79,6 +93,8 @@
         $relatorio->listarTransacoes();
     } elseif ($acao === 'produtosMaisVendidos') {
         $relatorio->listarProdutosMaisVendidos();
+    } elseif ($acao === 'produtosSemMovimentacao') {
+        $relatorio->listarProdutosSemMovimentacao();
     } else {
         echo json_encode(['erro' => 'Ação inválida']);
     }

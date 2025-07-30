@@ -95,6 +95,27 @@ class Relatorio {
             console.error('Erro ao listar produtos mais vendidos:', erro);
         }
     }
+
+    async listarProdutosSemMovimentacao() {
+        try {
+            const respostaProdutosSemMovimentacao = await fetch('/sistema-estoque/backend/relatorios.php?acao=produtosSemMovimentacao');
+            const produtosSemMovimentacao = await respostaProdutosSemMovimentacao.json();
+
+            const corpoListaProdutosSemMovimentacao = document.getElementById('corpoListaProdutosSemMovimentacao');
+            if (!corpoListaProdutosSemMovimentacao) return;
+
+            corpoListaProdutosSemMovimentacao.innerHTML = '';
+
+            produtosSemMovimentacao.forEach(produto => {
+                const linha = document.createElement('li');
+
+                linha.innerHTML = `${produto.nome_produto}`;
+                corpoListaProdutosSemMovimentacao.appendChild(linha);
+            });
+        } catch (erro) {
+            console.error('Erro ao listar produtos sem movimentação:', erro);
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -112,4 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const relatorioProdutosMaisVendidos = new Relatorio();
     relatorioProdutosMaisVendidos.listarProdutosMaisVendidos();
+
+    const relatorioProdutosSemMovimentacao = new Relatorio();
+    relatorioProdutosSemMovimentacao.listarProdutosSemMovimentacao();
 });
