@@ -15,12 +15,52 @@
             $sql = "SELECT COUNT(id_produto) FROM produtos";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
-            $total = $stmt->fetchColumn();
+            $totalProdutos = $stmt->fetchColumn();
 
-            echo json_encode($total);
+            echo json_encode($totalProdutos);
+        }
+
+        public function contarTransacoes() {
+            $sql = "SELECT COUNT(id_transacao) FROM historico_fluxos";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $totalTransacoes = $stmt->fetchColumn();
+
+            echo json_encode($totalTransacoes);
+        }
+
+        public function contarTransacoesEntrada() {
+            $sql = "SELECT COUNT(id_transacao) FROM historico_fluxos WHERE tipo_transacao = 'entrada'";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $totalTransacoesEntrada = $stmt->fetchColumn();
+
+            echo json_encode($totalTransacoesEntrada);
+        }
+
+        public function contarTransacoesSaida() {
+            $sql = "SELECT COUNT(id_transacao) FROM historico_fluxos WHERE tipo_transacao = 'saida'";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $totalTransacoesSaida = $stmt->fetchColumn();
+
+            echo json_encode($totalTransacoesSaida);
         }
     }
 
-    $contagemProdutos = new Relatorios($pdo);
-    $contagemProdutos->contarProdutos();
+    $relatorio = new Relatorios($pdo);
+
+    $acao = $_GET['acao'] ?? null;
+
+    if ($acao === 'produtos') {
+        $relatorio->contarProdutos();
+    } elseif ($acao === 'transacoes') {
+        $relatorio->contarTransacoes();
+    } elseif($acao === 'transacoesEntrada') {
+        $relatorio->contarTransacoesEntrada();
+    } elseif($acao === 'transacoesSaida') {
+        $relatorio->contarTransacoesSaida();
+    }else {
+        echo json_encode(['erro' => 'Ação inválida']);
+    }
 ?>
