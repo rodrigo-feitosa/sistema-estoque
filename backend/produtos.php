@@ -115,7 +115,6 @@ class Produtos {
         $stmt->execute();
     }
 
-
     public function registrarSaida ($dados) {
         if (!$dados) {
             echo json_encode(['mensagem' => 'Dados inválidos.']);

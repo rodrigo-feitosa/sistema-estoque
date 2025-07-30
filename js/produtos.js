@@ -206,6 +206,28 @@ class Produto {
             console.error('Erro ao editar produto:', erro);
         });
     }
+
+    async listarFornecedores() {
+        try {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php');
+            const fornecedores = await resposta.json();
+
+            const selectFornecedor = document.getElementById('fornecedor');
+            if (!selectFornecedor) return;
+
+            selectFornecedor.innerHTML = '';
+
+            fornecedores.forEach(fornecedor => {
+                const option = document.createElement('option');
+                option.value = fornecedor.id;
+                option.textContent = fornecedor.nome;
+                selectFornecedor.appendChild(option);
+            });
+
+        } catch (erro) {
+            console.error('Erro ao listar produtos:', erro);
+        }
+    }
 }
 
 // Inicialização
@@ -218,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectProdutoSaida = document.getElementById('selectProdutoSaida');
     const formEntrada = document.getElementById('formEntrada');
     const formSaida = document.getElementById('formSaida');
+    const selectFornecedor = document.getElementById('fornecedor');
 
     if (form) {
         form.addEventListener('submit', async (event) => {
