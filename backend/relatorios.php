@@ -29,26 +29,29 @@
             echo json_encode($totalTransacoes);
         }
 
-        public function contarTransacoesEntrada() {
-            $sql = "SELECT COUNT(id_transacao) FROM historico_fluxos WHERE tipo_transacao = 'entrada'";
+        public function valorEstoque() {
+            $sql = "SELECT SUM(p.qtd_estoque * p.preco) AS valor_total_estoque FROM produtos p";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
-            $totalTransacoesEntrada = $stmt->fetchColumn();
+            $totalValorEstoque = $stmt->fetchColumn();
 
-            echo json_encode($totalTransacoesEntrada);
+            echo json_encode($totalValorEstoque);
         }
 
-        public function contarTransacoesSaida() {
-            $sql = "SELECT COUNT(id_transacao) FROM historico_fluxos WHERE tipo_transacao = 'saida'";
+        public function listarTransacoes() {
+            $sql = "SELECT p.nome AS nome, hf.tipo_transacao AS tipo_transacao, hf.quantidade AS quantidade, SUM(hf.quantidade * p.preco) AS valor, hf.data_transacao AS data_transacao 
+                    FROM historico_fluxos hf
+                    INNER JOIN produtos p ON p.id_produto = hf.id_produto
+                    GROUP BY p.nome, hf.tipo_transacao, hf.quantidade, hf.data_transacao";
             $stmt = $this->conexao->prepare($sql);
             $stmt->execute();
-            $totalTransacoesSaida = $stmt->fetchColumn();
+            $listaTransacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            echo json_encode($totalTransacoesSaida);
+            echo json_encode($listaTransacoes);
         }
     }
 
-    $relatorio = new Relatorios($pdo);
+        $relatorio = new Relatorios($pdo);
 
     $acao = $_GET['acao'] ?? null;
 
@@ -56,11 +59,11 @@
         $relatorio->contarProdutos();
     } elseif ($acao === 'transacoes') {
         $relatorio->contarTransacoes();
-    } elseif($acao === 'transacoesEntrada') {
-        $relatorio->contarTransacoesEntrada();
-    } elseif($acao === 'transacoesSaida') {
-        $relatorio->contarTransacoesSaida();
-    }else {
+    } elseif ($acao === 'valorEstoque') {
+        $relatorio->valorEstoque();
+    } elseif ($acao === 'listaTransacoes') {
+        $relatorio->listarTransacoes();
+    } else {
         echo json_encode(['erro' => 'Ação inválida']);
     }
 ?>

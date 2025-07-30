@@ -21,29 +21,57 @@ class Relatorio {
             const respostaTotalTransacoes = await fetch('/sistema-estoque/backend/relatorios.php?acao=transacoes');
             const contagemTransacoes = await respostaTotalTransacoes.json();
 
-            const respostaTotalTransacoesEntrada = await fetch('/sistema-estoque/backend/relatorios.php?acao=transacoesEntrada');
-            const contagemTransacoesEntrada = await respostaTotalTransacoesEntrada.json();
-
-            const respostaTotalTransacoesSaida = await fetch('/sistema-estoque/backend/relatorios.php?acao=transacoesSaida');
-            const contagemTransacoesSaida = await respostaTotalTransacoesSaida.json();
-
             const cardTotalTransacoes = document.getElementById('cardTotalTransacoes');
             if (!cardTotalTransacoes) return;
-
-            const cardTotalTransacoesEntrada = document.getElementById('cardTotalTransacoesEntrada');
-            if (!cardTotalTransacoesEntrada) return;
-
-            const cardTotalTransacoesSaida = document.getElementById('cardTotalTransacoesSaida');
-            if (!cardTotalTransacoesSaida) return;
 
             cardTotalTransacoes.innerHTML = '';
 
             cardTotalTransacoes.innerHTML = `${contagemTransacoes}`;
-            cardTotalTransacoesEntrada.innerHTML = `${contagemTransacoesEntrada}`;
-            cardTotalTransacoesSaida.innerHTML = `${contagemTransacoesSaida}`;
-
         } catch (erro) {
             console.error('Erro ao contar transações:', erro);
+        }
+    }
+
+    async valorEstoque() {
+        try {
+            const respostaValorEstoque = await fetch('/sistema-estoque/backend/relatorios.php?acao=valorEstoque');
+            const contagemValorEstoque = await respostaValorEstoque.json();
+
+            const cardTotalValorEstoque = document.getElementById('cardTotalValorEstoque');
+            if (!cardTotalValorEstoque) return;
+
+            cardTotalValorEstoque.innerHTML = '';
+
+            cardTotalValorEstoque.innerHTML = `R$ ${contagemValorEstoque}`;
+        } catch (erro) {
+            console.error('Erro ao contar valor de estoque:', erro);
+        }
+    }
+
+    async listarTransacoes() {
+        try {
+            const respostaListaTransacoes = await fetch('/sistema-estoque/backend/relatorios.php?acao=listaTransacoes');
+            const listaTransacoes = await respostaListaTransacoes.json();
+
+            const corpoTabelaTransacoes = document.getElementById('corpoTabelaTransacoes');
+            if (!corpoTabelaTransacoes) return;
+
+            corpoTabelaTransacoes.innerHTML = '';
+
+            listaTransacoes.forEach(transacao => {
+                const linha = document.createElement('tr');
+
+                linha.innerHTML = `
+                    <td>${transacao.nome}</td>
+                    <td>${transacao.tipo_transacao}</td>
+                    <td>${transacao.quantidade}</td>
+                    <td>${transacao.valor}</td>
+                    <td>${transacao.data_transacao}</td>
+                `;
+                corpoTabelaTransacoes.appendChild(linha);
+            });
+        } catch (erro) {
+            console.error('Erro ao listar transações:', erro);
         }
     }
 }
@@ -54,4 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const relatorioTotalTransacoes = new Relatorio();
     relatorioTotalTransacoes.contarTransacoes();
+
+    const relatorioTotalValorEstoque = new Relatorio();
+    relatorioTotalValorEstoque.valorEstoque();
+
+    const relatorioListaTransacoes = new Relatorio();
+    relatorioListaTransacoes.listarTransacoes();
 });
