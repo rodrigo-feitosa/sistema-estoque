@@ -74,6 +74,27 @@ class Relatorio {
             console.error('Erro ao listar transações:', erro);
         }
     }
+
+    async listarProdutosMaisVendidos() {
+        try {
+            const respostaProdutosMaisVendidos = await fetch('/sistema-estoque/backend/relatorios.php?acao=produtosMaisVendidos');
+            const produtosMaisVendidos = await respostaProdutosMaisVendidos.json();
+
+            const corpoListaProdutosMaisVendidos = document.getElementById('corpoListaProdutosMaisVendidos');
+            if (!corpoListaProdutosMaisVendidos) return;
+
+            corpoListaProdutosMaisVendidos.innerHTML = '';
+
+            produtosMaisVendidos.forEach(produto => {
+                const linha = document.createElement('li');
+
+                linha.innerHTML = `${produto.nome_produto}`;
+                corpoListaProdutosMaisVendidos.appendChild(linha);
+            });
+        } catch (erro) {
+            console.error('Erro ao listar produtos mais vendidos:', erro);
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -88,4 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const relatorioListaTransacoes = new Relatorio();
     relatorioListaTransacoes.listarTransacoes();
+
+    const relatorioProdutosMaisVendidos = new Relatorio();
+    relatorioProdutosMaisVendidos.listarProdutosMaisVendidos();
 });

@@ -49,6 +49,20 @@
 
             echo json_encode($listaTransacoes);
         }
+
+        public function listarProdutosMaisVendidos() {
+            $sql = "SELECT p.nome AS nome_produto, COUNT(hf.id_transacao) AS qtd_saidas FROM historico_fluxos hf 
+                    INNER JOIN produtos p ON p.id_produto = hf.id_produto
+                    WHERE tipo_transacao = 'saida'
+                    GROUP BY p.nome
+                    ORDER BY COUNT(hf.id_transacao) DESC
+                    LIMIT 5";
+            $stmt = $this->conexao->prepare($sql);
+            $stmt->execute();
+            $listaProdutosMaisVendidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            echo json_encode($listaProdutosMaisVendidos);
+        }
     }
 
         $relatorio = new Relatorios($pdo);
@@ -63,6 +77,8 @@
         $relatorio->valorEstoque();
     } elseif ($acao === 'listaTransacoes') {
         $relatorio->listarTransacoes();
+    } elseif ($acao === 'produtosMaisVendidos') {
+        $relatorio->listarProdutosMaisVendidos();
     } else {
         echo json_encode(['erro' => 'Ação inválida']);
     }
