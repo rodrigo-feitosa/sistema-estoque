@@ -22,13 +22,44 @@
     </header>
     
     <main>
-        <section class="justify-content-center w-75 mx-auto mb-5">
+        <section class="justify-content-center w-75 bg-body mx-auto p-5 mb-5 rounded-5">
             <h2>Relatório de estoque</h2>
             <div class="row">
-                <div id="cardTotalProdutos" class="col-auto"></div>
-                <div id="cardTotalTransacoes" class="col-auto"></div>
-                <div id="cardTotalTransacoesEntrada" class="col-auto"></div>
-                <div id="cardTotalTransacoesSaida" class="col-auto"></div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-white bg-primary shadow-lg rounded-3">
+                        <div class="card-body">
+                            <h5 class="card-title">&#128230; Produtos</h5>
+                            <p id="cardTotalProdutos" class="card-text fs-4 fw-bold">--</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-white bg-success shadow-lg rounded-3">
+                        <div class="card-body">
+                            <h5 class="card-title">&#128202; Total de Transações</h5>
+                            <p id="cardTotalTransacoes" class="card-text fs-4 fw-bold">--</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-white bg-warning shadow-lg rounded-3">
+                        <div class="card-body">
+                            <h5 class="card-title">&#128200; Entradas</h5>
+                            <p id="cardTotalTransacoesEntrada" class="card-text fs-4 fw-bold">--</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <div class="card text-white bg-danger shadow-lg rounded-3">
+                        <div class="card-body">
+                            <h5 class="card-title">&#128201; Saídas</h5>
+                            <p id="cardTotalTransacoesSaida" class="card-text fs-4 fw-bold">--</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 

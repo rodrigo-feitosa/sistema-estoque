@@ -9,7 +9,7 @@ class Relatorio {
 
             cardTotalProdutos.innerHTML = '';
 
-            cardTotalProdutos.innerHTML = `Total de produtos: ${contagemProdutos}`;
+            cardTotalProdutos.innerHTML = `${contagemProdutos}`;
 
         } catch (erro) {
             console.error('Erro ao contar produtos:', erro);
@@ -38,9 +38,9 @@ class Relatorio {
 
             cardTotalTransacoes.innerHTML = '';
 
-            cardTotalTransacoes.innerHTML = `Total de transações: ${contagemTransacoes}`;
-            cardTotalTransacoesEntrada.innerHTML = `Total de transações de entrada: ${contagemTransacoesEntrada}`;
-            cardTotalTransacoesSaida.innerHTML = `Total de transações de saída: ${contagemTransacoesSaida}`;
+            cardTotalTransacoes.innerHTML = `${contagemTransacoes}`;
+            cardTotalTransacoesEntrada.innerHTML = `${contagemTransacoesEntrada}`;
+            cardTotalTransacoesSaida.innerHTML = `${contagemTransacoesSaida}`;
 
         } catch (erro) {
             console.error('Erro ao contar transações:', erro);
