@@ -13,6 +13,23 @@ class Categorias {
         $this->conexao = $pdo;
     }
 
+    public function cadastrarCategoria($dados) {
+        if (!$dados) {
+            echo json_encode(['mensagem' => 'Dados inválidos.']);
+            return;
+        }
+
+        $sql = "INSERT INTO categorias (descricao)
+                VALUES (:descricao)";
+
+        $stmt = $this->conexao->prepare($sql);
+
+        $stmt->bindParam(':descricao', $dados['descricao']);
+        $stmt->execute();
+
+        echo json_encode(['mensagem' => 'Categoria cadastrada com sucesso!']);
+    }
+
     public function listarCategorias() {
         try {
             $stmt = $this->conexao->query("SELECT id_categoria, descricao FROM categorias ORDER BY descricao");
@@ -24,5 +41,15 @@ class Categorias {
     }
 }
 
-$categoria = new Categorias($pdo);
-$categoria->listarCategorias();
+    $acao = $_GET['acao'] ?? null;
+
+    if ($acao === 'listarCategorias') {
+        $categoria = new Categorias($pdo);
+        $categoria->listarCategorias();
+    } elseif ($acao === 'cadastrarCategoria') {
+        $dados = json_decode(file_get_contents('php://input'), true);
+        $novaCategoria = new Categorias($pdo);
+        $novaCategoria->cadastrarCategoria($dados);
+     } else {
+        echo json_encode(['erro' => 'Ação inválida']);
+    }

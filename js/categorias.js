@@ -1,4 +1,23 @@
 class Categorias {
+        async cadastrarCategoria() {
+        const dados = {
+            descricao: this.descricao
+        };
+
+        try {
+            const resposta = await fetch('/sistema-estoque/backend/categorias.php?acao=cadastrarCategoria', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await resposta.json();
+            alert(resultado.mensagem);
+        } catch (erro) {
+            console.error('Erro ao cadastrar categoria:', erro);
+        }
+    }
+
     listarCategorias(endpoint, selectId) {
         this.endpoint = endpoint;
         this.selectElement = document.getElementById(selectId);
@@ -30,7 +49,22 @@ class Categorias {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const formCadastroCategoria = document.getElementById('formCadastrarCategoria');
+    const formCadastroProduto = document.getElementById('formCadastrarProduto');
     const categoria = new Categorias();
-    categoria.listarCategorias('/sistema-estoque/backend/categorias.php', 'categoriaProduto');
-    categoria.carregarCategorias();
+
+    if(formCadastroCategoria) {
+        formCadastroCategoria.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            categoria.descricao = document.getElementById('descricaoCadastroCategoria').value;
+            
+            await categoria.cadastrarCategoria();
+            formCadastroCategoria.reset();
+        });
+    }
+    if(formCadastroProduto) {
+        categoria.listarCategorias('/sistema-estoque/backend/categorias.php?acao=listarCategorias', 'categoriaCadastroProduto');
+        categoria.carregarCategorias();
+    }
 });
