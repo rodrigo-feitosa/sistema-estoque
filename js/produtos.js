@@ -232,7 +232,7 @@ class Produto {
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('formProduto');
+    const formCadastrarProduto = document.getElementById('formCadastrarProduto');
     const btnEditar = document.getElementById('btnSalvarEdicao');
     const produto = new Produto();
     const corpoTabelaProdutos = document.getElementById('corpoTabelaProdutos');
@@ -240,23 +240,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectProdutoSaida = document.getElementById('selectProdutoSaida');
     const formEntrada = document.getElementById('formEntrada');
     const formSaida = document.getElementById('formSaida');
-    const selectFornecedor = document.getElementById('fornecedor');
 
-    if (form) {
-        form.addEventListener('submit', async (event) => {
+    if (formCadastrarProduto) {
+        formCadastrarProduto.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const novoProduto = new Produto();
-            novoProduto.nome = document.getElementById('nomeProduto')?.value;
-            novoProduto.descricao = document.getElementById('descricaoProduto')?.value;
-            novoProduto.categoria = document.getElementById('categoriaProduto')?.value;
-            novoProduto.unidade_medida = document.getElementById('unidadeMedida')?.value;
-            novoProduto.preco = document.getElementById('precoProduto')?.value;
-            novoProduto.quantidade = document.getElementById('quantidadeProduto')?.value;
-            novoProduto.fornecedor = document.getElementById('fornecedor')?.value;
+            novoProduto.nome = document.getElementById('nomeCadastroProduto')?.value;
+            novoProduto.descricao = document.getElementById('descricaoCadastroProduto')?.value;
+            novoProduto.categoria = document.getElementById('categoriaCadastroProduto')?.value;
+            novoProduto.unidade_medida = document.getElementById('unidadeMedidaCadastroProduto')?.value;
+            novoProduto.preco = document.getElementById('precoCadastroProduto')?.value;
+            novoProduto.quantidade = 0;
+            novoProduto.fornecedor = document.getElementById('fornecedorCadastroProduto')?.value;
 
             await novoProduto.cadastrarProduto();
-            form.reset();
+            formCadastrarProduto.reset();
         });
     }
 

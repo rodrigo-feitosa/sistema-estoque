@@ -18,3 +18,33 @@ label {
     max-height: 500px;
     overflow-y: auto;
 }
+
+.btn-cadastrar-produto {
+    background-color: #012faf;
+    color: #fff;
+}
+
+.btn-cadastrar-produto:hover {
+    background-color: #011b64;
+    color: #fff;
+}
+
+.btn-cadastrar-categoria {
+    background-color: #f50014;
+    color: #fff;
+}
+
+.btn-cadastrar-categoria:hover {
+    background-color: #8f0000;
+    color: #fff;
+}
+
+.btn-cadastrar-fornecedor {
+    background-color: #f53900;
+    color: #fff;
+}
+
+.btn-cadastrar-fornecedor:hover {
+    background-color: #cc3000;
+    color: #fff;
+}

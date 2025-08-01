@@ -12,10 +12,10 @@
         <nav class="navbar justify-content-center mb-3">
             <div>
                 <ul class="nav nav-pills nav-fill">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Cadastro de produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="paginas/fluxo_estoque.html">Registrar entrada e saída</a></li>
                     <li class="nav-item"><a class="nav-link" href="paginas/gestao_estoque.html">Gestão de estoque</a></li>
-                    <li class="nav-item"><a class="nav-link" href="paginas/relatorios.html">Relatórios</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="paginas/relatorios.html">Relatórios</a></li>
                 </ul>
             </div>
         </nav>
@@ -24,46 +24,7 @@
     <main>
         <section class="d-flex justify-content-center">
             <div class="d-flex bg-body p-5 rounded-5 w-40 justify-content-center">
-                <form id="formProduto">
-                    <h3 class="mb-3">Cadastro de produto</h3>
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label" for="nomeProduto">Nome</label>
-                            <input class="form-control form-control-sm" id="nomeProduto" name="nomeProduto" type="text"><br>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label" for="descricaoProduto">Descrição</label>
-                            <input class="form-control form-control-sm" id="descricaoProduto" name="descricaoProduto" type="text"><br>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label" for="categoriaProduto">Categoria</label>
-                            <select class="form-control form-select form-select-sm" id="categoriaProduto" name="categoriaProduto">
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label" for="unidadeMedida">Unidade de medida</label>
-                            <input class="form-control form-control-sm" id="unidadeMedida" name="unidadeMedida" type="text"><br>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label" for="precoProduto">Preço</label>
-                            <input class="form-control form-control form-control-sm" id="precoProduto" name="precoProduto" type="number"><br>
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label" for="fornecedor">Fornecedor</label>
-                            <select class="form-control form-select form-select-sm" id="fornecedor" name="fornecedor">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="text-center mt-3">
-                        <button class="btn btn-primary btn-lg w-75">Cadastrar</button>
-                    </div>
-                </form>
+                
             </div>
         </section>
     </main>
@@ -75,5 +36,6 @@
     <script src="./js/produtos.js"></script>
     <script src="./js/categorias.js"></script>
     <script src="./js/fornecedores.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

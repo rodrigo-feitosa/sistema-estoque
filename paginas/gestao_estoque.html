@@ -12,7 +12,7 @@
         <nav class="navbar justify-content-center mb-3">
             <div>
                 <ul class="nav nav-pills nav-fill">
-                    <li class="nav-item"><a class="nav-link" href="../index.html">Cadastro de produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="./fluxo_estoque.html">Registrar entrada e saída</a></li>
                     <li class="nav-item"><a class="nav-link active" href="./gestao_estoque.html">Gestão de estoque</a></li>
                     <li class="nav-item"><a class="nav-link" href="./relatorios.html">Relatórios</a></li>
@@ -43,6 +43,11 @@
                         <!-- Produtos serão inseridos aqui -->
                     </tbody>
                 </table>
+            </div>
+            <div class="text-center mt-5">
+                <button type="button" class="btn btn-cadastrar-produto" data-bs-toggle="modal" data-bs-target="#modalCadastroProduto">Cadastrar produto</button>
+                <button type="button" class="btn btn-cadastrar-categoria" data-bs-toggle="modal" data-bs-target="#modalCadastroCategoria">Cadastrar categoria</button>
+                <button type="button" class="btn btn-cadastrar-fornecedor" data-bs-toggle="modal" data-bs-target="#modalCadastroFornecedor">Cadastrar fornecedor</button>
             </div>
         </section>
     </main>
@@ -99,12 +104,124 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalCadastroProduto" tabindex="-1" aria-labelledby="modalCadastroProdutoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="formCadastrarProduto">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCadastroProdutoLabel">Cadastro de Produto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label" for="nomeCadastroProduto">Nome</label>
+                                <input class="form-control form-control-sm" id="nomeCadastroProduto" name="nomeCadastroProduto" type="text">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="descricaoCadastroProduto">Descrição</label>
+                                <input class="form-control form-control-sm" id="descricaoCadastroProduto" name="descricaoCadastroProduto" type="text">
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label class="form-label" for="categoriaCadastroProduto">Categoria</label>
+                                <select class="form-control form-select form-select-sm" id="categoriaCadastroProduto" name="categoriaCadastroProduto"></select>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="unidadeMedidaCadastroProduto">Unidade de medida</label>
+                                <input class="form-control form-control-sm" id="unidadeMedidaCadastroProduto" name="unidadeMedidaCadastroProduto" type="text">
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label class="form-label" for="precoCadastroProduto">Preço</label>
+                                <input class="form-control form-control-sm" id="precoCadastroProduto" name="precoCadastroProduto" type="number">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="fornecedorCadastroProduto">Fornecedor</label>
+                                <select class="form-control form-select form-select-sm" id="fornecedorCadastroProduto" name="fornecedorCadastroProduto"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Cadastrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalCadastroCategoria" tabindex="-1" aria-labelledby="modalCadastroCategoriaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="formCadastrarCategoria">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCadastroCategoriaLabel">Cadastro de Categoria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="form-label" for="descricaoCadastroCategoria">Categoria</label>
+                                <input class="form-control form-control-sm" id="descricaoCadastroCategoria" name="descricaoCadastroCategoria" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Cadastrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalCadastroFornecedor" tabindex="-1" aria-labelledby="modalCadastroFornecedorLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="formCadastrarFornecedor">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCadastroFornecedorLabel">Cadastro de Fornecedor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label" for="razaoSocialCadastroFornecedor">Razão social</label>
+                                <input class="form-control form-control-sm" id="razaoSocialCadastroFornecedor" name="razaoSocialCadastroFornecedor" type="text">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="nomeFantasiaCadastroFornecedor">Nome fantasia</label>
+                                <input class="form-control form-control-sm" id="nomeFantasiaCadastroFornecedor" name="nomeFantasiaCadastroFornecedor" type="text">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="form-label" for="cnpjCadastroFornecedor">CNPJ</label>
+                                <input class="form-control form-control-sm" id="cnpjCadastroFornecedor" name="cnpjCadastroFornecedor" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Cadastrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
 
     </footer>
 
     <script src="../js/produtos.js"></script>
     <script src="../js/categorias.js"></script>
+    <script src="../js/fornecedores.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
