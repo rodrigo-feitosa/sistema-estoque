@@ -17,14 +17,22 @@
                 return;
             }
 
-            $sql = "INSERT INTO fornecedores (razao_social, nome_fantasia, cnpj)
-                    VALUES (:razao_social, :nome_fantasia, :cnpj)";
+            $sql = "INSERT INTO fornecedores (razao_social, nome_fantasia, cnpj, cep, rua, numero, bairro, cidade, estado, telefone, email)
+                    VALUES (:razao_social, :nome_fantasia, :cnpj, :cep, :rua, :numero, :bairro, :cidade, :estado, :telefone, :email)";
 
             $stmt = $this->conexao->prepare($sql);
 
             $stmt->bindParam(':razao_social', $dados['razao_social']);
             $stmt->bindParam(':nome_fantasia', $dados['nome_fantasia']);
             $stmt->bindParam(':cnpj', $dados['cnpj']);
+            $stmt->bindParam(':cep', $dados['cep']);
+            $stmt->bindParam(':rua', $dados['rua']);
+            $stmt->bindParam(':numero', $dados['numero']);
+            $stmt->bindParam(':bairro', $dados['bairro']);
+            $stmt->bindParam(':cidade', $dados['cidade']);
+            $stmt->bindParam(':estado', $dados['estado']);
+            $stmt->bindParam(':telefone', $dados['telefone']);
+            $stmt->bindParam(':email', $dados['email']);
             $stmt->execute();
 
             echo json_encode(['mensagem' => 'Fornecedor cadastrado com sucesso!']);
