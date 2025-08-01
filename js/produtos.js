@@ -115,7 +115,7 @@ class Produto {
             });
 
             const resultado = await resposta.json();
-            alert(resultado.mensagem || 'Operação finalizada.');
+            alert(resultado.mensagem);
         } catch (erro) {
             console.error('Erro ao registrar entrada:', erro);
             alert('Erro ao registrar entrada no estoque.');
@@ -137,7 +137,7 @@ class Produto {
             });
 
             const resultado = await resposta.json();
-            alert(resultado.mensagem || 'Operação finalizada.');
+            alert(resultado.mensagem);
         } catch (erro) {
             console.error('Erro ao registrar saída:', erro);
             alert('Erro ao registrar saída no estoque.');
