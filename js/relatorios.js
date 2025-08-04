@@ -52,14 +52,14 @@ class Relatorio {
             const respostaListaTransacoes = await fetch('/sistema-estoque/backend/relatorios.php?acao=listaTransacoes');
             this.transacoes = await respostaListaTransacoes.json();
             this.paginaAtual = 1;
-            this.renderizarTabela();
+            this.criarLinhaTabela();
             this.criarPaginacao();
         } catch (erro) {
             console.error('Erro ao listar transações:', erro);
         }
     }
 
-    renderizarTabela() {
+    criarLinhaTabela() {
         const corpoTabelaTransacoes = document.getElementById('corpoTabelaTransacoes');
         if (!corpoTabelaTransacoes) return;
 
@@ -75,7 +75,7 @@ class Relatorio {
                 <td>${transacao.nome}</td>
                 <td>${transacao.tipo_transacao}</td>
                 <td>${transacao.quantidade}</td>
-                <td>${transacao.valor}</td>
+                <td>${parseFloat(transacao.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                 <td>${transacao.data_transacao}</td>
             `;
             corpoTabelaTransacoes.appendChild(linha);
@@ -95,7 +95,7 @@ class Relatorio {
             botao.textContent = i;
             botao.onclick = () => {
                 this.paginaAtual = i;
-                this.renderizarTabela();
+                this.criarLinhaTabela();
             };
             paginacaoDiv.appendChild(botao);
         }

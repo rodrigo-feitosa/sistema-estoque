@@ -53,7 +53,7 @@ class Produto {
             <td>${produto.descricao}</td>
             <td>${produto.categoria}</td>
             <td>${produto.unidade_medida}</td>
-            <td>${produto.preco}</td>
+            <td>${parseFloat(produto.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})}</td>
             <td>${produto.qtd_estoque}</td>
             <td>${produto.fornecedor}</td>
             <td>
