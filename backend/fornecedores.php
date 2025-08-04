@@ -40,7 +40,7 @@
 
         public function listarFornecedores() {
             try {
-                $stmt = $this->conexao->query("SELECT id_fornecedor, nome_fantasia FROM fornecedores");
+                $stmt = $this->conexao->query("SELECT * FROM fornecedores");
                 $fornecedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo json_encode($fornecedores);
             } catch (PDOException $e) {
@@ -49,15 +49,21 @@
         }
     }
 
-    $acao = $_GET['acao'] ?? null;
+    header('Content-Type: application/json');
 
-    if ($acao === 'listarFornecedores') {
-        $fornecedor = new Fornecedores($pdo);
+    $fornecedor = new Fornecedores($pdo);
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $dados = json_decode(file_get_contents("php://input"), true);
+        $acao = $_GET['acao'] ?? null;
+
+        if ($acao === 'cadastrarFornecedor') {
+            $fornecedor->cadastrarFornecedor($dados);
+        } else {
+            echo json_encode(['erro' => 'Ação inválida']);
+        }
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $fornecedor->listarFornecedores();
-    } elseif ($acao === 'cadastrarFornecedor') {
-        $dados = json_decode(file_get_contents('php://input'), true);
-        $novoFornecedor = new Fornecedores($pdo);
-        $novoFornecedor->cadastrarFornecedor($dados);
     } else {
-        echo json_encode(['erro' => 'Ação inválida']);
+        echo json_encode(['mensagem' => 'Método não suportado.']);
     }

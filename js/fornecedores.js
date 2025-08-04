@@ -75,19 +75,56 @@ class Fornecedores {
         }
     }
 
-    listarFornecedores(endpoint, selectId) {
-        this.endpoint = endpoint;
-        this.selectElement = document.getElementById(selectId);
+    async listarFornecedores() {
+        try {
+            const resposta = await fetch('/sistema-estoque/backend/fornecedores.php?acao=listarFornecedores');
+            const fornecedores = await resposta.json();
+
+            const corpoTabela = document.getElementById('corpoTabelaFornecedores');
+            if (!corpoTabela) return;
+
+            corpoTabela.innerHTML = '';
+
+            fornecedores.forEach(fornecedor => {
+                const linha = this.criarLinhaFornecedor(fornecedor);
+                corpoTabela.appendChild(linha);
+            });
+
+        } catch (erro) {
+            console.error('Erro ao listar fornecedores:', erro);
+        }
+    }
+
+    criarLinhaFornecedor(fornecedor) {
+        const linha = document.createElement('tr');
+
+        linha.innerHTML = `
+            <td>${fornecedor.nome_fantasia}</td>
+            <td>${fornecedor.cnpj}</td>
+            <td>${fornecedor.cep}</td>
+            <td>${fornecedor.rua} - ${fornecedor.bairro} - ${fornecedor.cidade}, ${fornecedor.estado}</td>
+            <td>${fornecedor.telefone} - ${fornecedor.email}</td>
+            <td>
+                <button class="btn btn-primary btn-editar-fornecedor" data-id="${fornecedor.id_fornecedor}">Editar</button>
+            </td>
+        `;
+
+        // linha.querySelector('.btn-editar-fornecedor').addEventListener('click', () => {
+        //     this.abrirModalEdicao(fornecedor);
+        // });
+
+        return linha;
     }
 
     async carregarFornecedores() {
         try {
-            const response = await fetch(this.endpoint);
-            const fornecedores = await response.json();
+            const resposta = await fetch('/sistema-estoque/backend/fornecedores.php?acao=listarFornecedores');
+            const fornecedores = await resposta.json();
+
+            this.selectElement = document.getElementById('fornecedorCadastroProduto');
             this.preencherSelect(fornecedores);
-        } catch (error) {
-            console.error('Erro ao carregar fornecedores:', error);
-            this.mostrarErro();
+        } catch (erro) {
+            console.error('Erro ao carregar fornecedores no select:', erro);
         }
     }
 
@@ -108,6 +145,7 @@ class Fornecedores {
 document.addEventListener('DOMContentLoaded', () => {
     const formCadastroFornecedor = document.getElementById('formCadastrarFornecedor');
     const formCadastroProduto = document.getElementById('formCadastrarProduto');
+    const corpoTabelaFornecedores = document.getElementById('corpoTabelaFornecedores');
     const fornecedor = new Fornecedores();
 
     // Evento de pesquisa de CEP
@@ -143,5 +181,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formCadastroProduto) {
         fornecedor.listarFornecedores('/sistema-estoque/backend/fornecedores.php?acao=listarFornecedores', 'fornecedorCadastroProduto');
         fornecedor.carregarFornecedores();
+    }
+
+    if (corpoTabelaFornecedores) {
+        fornecedor.listarFornecedores();
     }
 });

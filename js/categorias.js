@@ -1,5 +1,5 @@
 class Categorias {
-        async cadastrarCategoria() {
+    async cadastrarCategoria() {
         const dados = {
             descricao: this.descricao
         };
