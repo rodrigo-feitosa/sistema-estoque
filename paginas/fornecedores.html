@@ -130,6 +130,89 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="modalEdicaoFornecedor" tabindex="-1" aria-labelledby="modalEdicaoFornecedorLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="formEdicaoFornecedor">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEdicaoFornecedorLabel">Edição de Cadastro do Fornecedor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="idFornecedor">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label" for="razaoSocialEdicaoFornecedor">Razão social</label>
+                                <input class="form-control form-control-sm" id="razaoSocialEdicaoFornecedor" name="razaoSocialEdicaoFornecedor" type="text" disabled>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="nomeFantasiaEdicaoFornecedor">Nome fantasia</label>
+                                <input class="form-control form-control-sm" id="nomeFantasiaEdicaoFornecedor" name="nomeFantasiaEdicaoFornecedor" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label class="form-label" for="cnpjEdicaoFornecedor">CNPJ</label>
+                                <input class="form-control form-control-sm" id="cnpjEdicaoFornecedor" name="cnpjEdicaoFornecedor" type="text" disabled>
+                            </div>
+                        </div>
+
+                        <!-- Endereço -->
+                        <h6 class="fw-bold mt-3">Endereço</h6>
+                        <div class="row mb-3">
+                            <div class="col-8">
+                                <label class="form-label" for="ruaEdicaoFornecedor">Rua</label>
+                                <input class="form-control form-control-sm" id="ruaEdicaoFornecedor" name="ruaEdicaoFornecedor" type="text">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label" for="numeroEdicaoFornecedor">Número</label>
+                                <input class="form-control form-control-sm" id="numeroEdicaoFornecedor" name="numeroEdicaoFornecedor" type="text">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label" for="bairroEdicaoFornecedor">Bairro</label>
+                                <input class="form-control form-control-sm" id="bairroEdicaoFornecedor" name="bairroEdicaoFornecedor" type="text">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="cidadeEdicaoFornecedor">Cidade</label>
+                                <input class="form-control form-control-sm" id="cidadeEdicaoFornecedor" name="cidadeEdicaoFornecedor" type="text">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label" for="estadoEdicaoFornecedor">Estado</label>
+                                <input class="form-control form-control-sm" id="estadoEdicaoFornecedor" name="estadoEdicaoFornecedor" type="text">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="cepEdicaoFornecedor">CEP</label>
+                                <input class="form-control form-control-sm" id="cepEdicaoFornecedor" name="cepEdicaoFornecedor" type="text">
+                            </div>
+                        </div>
+
+                        <!-- Contato -->
+                        <h6 class="fw-bold mt-3">Contato</h6>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label class="form-label" for="telefoneEdicaoFornecedor">Telefone</label>
+                                <input class="form-control form-control-sm" id="telefoneEdicaoFornecedor" name="telefoneEdicaoFornecedor" type="text">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label" for="emailEdicaoFornecedor">E-mail</label>
+                                <input class="form-control form-control-sm" id="emailEdicaoFornecedor" name="emailEdicaoFornecedor" type="email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnSalvarEdicaoFornecedor" class="btn btn-primary">Salvar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
 
     </footer>

@@ -47,6 +47,35 @@
                 echo json_encode(['erro' => 'Erro ao buscar categorias: ' . $e->getMessage()]);
             }
         }
+
+        public function salvarEdicaoFornecedor($dados) {
+            $sql = "UPDATE fornecedores SET 
+                    rua = :rua,
+                    numero = :numero,
+                    bairro = :bairro,
+                    cidade = :cidade,
+                    estado = :estado,
+                    cep = :cep,
+                    telefone = :telefone,
+                    email = :email
+                WHERE id_fornecedor = :id_fornecedor";
+
+            $stmt = $this->conexao->prepare($sql);
+
+            $stmt->bindParam(':rua', $dados['rua']);
+            $stmt->bindParam(':numero', $dados['numero']);
+            $stmt->bindParam(':bairro', $dados['bairro']);
+            $stmt->bindParam(':cidade', $dados['cidade']);
+            $stmt->bindParam(':estado', $dados['estado']);
+            $stmt->bindParam(':cep', $dados['cep']);
+            $stmt->bindParam(':telefone', $dados['telefone']);
+            $stmt->bindParam(':email', $dados['email']);
+            $stmt->bindParam(':id_fornecedor', $dados['id_fornecedor']);
+
+            $stmt->execute();
+
+            echo json_encode(['mensagem' => 'Fornecedor atualizado com sucesso!']);
+        }
     }
 
     header('Content-Type: application/json');
@@ -59,6 +88,8 @@
 
         if ($acao === 'cadastrarFornecedor') {
             $fornecedor->cadastrarFornecedor($dados);
+        } elseif ($acao === 'editarFornecedor') {
+            $fornecedor->salvarEdicaoFornecedor($dados);
         } else {
             echo json_encode(['erro' => 'Ação inválida']);
         }

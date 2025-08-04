@@ -109,11 +109,61 @@ class Fornecedores {
             </td>
         `;
 
-        // linha.querySelector('.btn-editar-fornecedor').addEventListener('click', () => {
-        //     this.abrirModalEdicao(fornecedor);
-        // });
+        linha.querySelector('.btn-editar-fornecedor').addEventListener('click', () => {
+            this.abrirModalEdicao(fornecedor);
+        });
 
         return linha;
+    }
+
+    abrirModalEdicao(fornecedor) {
+        const modal = new bootstrap.Modal(document.getElementById('modalEdicaoFornecedor'));
+        if (!modal) return;
+
+        document.getElementById('idFornecedor').value = fornecedor.id_fornecedor;
+        document.getElementById('razaoSocialEdicaoFornecedor').value = fornecedor.razao_social;
+        document.getElementById('nomeFantasiaEdicaoFornecedor').value = fornecedor.nome_fantasia;
+        document.getElementById('cnpjEdicaoFornecedor').value = fornecedor.cnpj;
+        document.getElementById('cepEdicaoFornecedor').value = fornecedor.cep;
+        document.getElementById('ruaEdicaoFornecedor').value = fornecedor.rua;
+        document.getElementById('numeroEdicaoFornecedor').value = fornecedor.numero;
+        document.getElementById('bairroEdicaoFornecedor').value = fornecedor.bairro;
+        document.getElementById('cidadeEdicaoFornecedor').value = fornecedor.cidade;
+        document.getElementById('estadoEdicaoFornecedor').value = fornecedor.estado;
+        document.getElementById('telefoneEdicaoFornecedor').value = fornecedor.telefone;
+        document.getElementById('emailEdicaoFornecedor').value = fornecedor.email;
+
+        modal.show();
+    }
+
+    salvarEdicaoFornecedor(id) {
+        const dados = {
+            id_fornecedor: id,
+            rua: document.getElementById('ruaEdicaoFornecedor').value,
+            numero: document.getElementById('numeroEdicaoFornecedor').value,
+            bairro: document.getElementById('bairroEdicaoFornecedor').value,
+            cidade: document.getElementById('cidadeEdicaoFornecedor').value,
+            estado: document.getElementById('estadoEdicaoFornecedor').value,
+            cep: document.getElementById('cepEdicaoFornecedor').value,
+            telefone: document.getElementById('telefoneEdicaoFornecedor').value,
+            email: document.getElementById('emailEdicaoFornecedor').value
+        };
+
+        fetch('/sistema-estoque/backend/fornecedores.php?acao=editarFornecedor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        })
+        .then(resposta => resposta.json())
+        .then(resultado => {
+            alert(resultado.mensagem);
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalEdicaoFornecedor'));
+            modal.hide();
+            this.listarFornecedores();
+        })
+        .catch(erro => {
+            console.error('Erro ao editar fornecedor:', erro);
+        });
     }
 
     async carregarFornecedores() {
@@ -146,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formCadastroFornecedor = document.getElementById('formCadastrarFornecedor');
     const formCadastroProduto = document.getElementById('formCadastrarProduto');
     const corpoTabelaFornecedores = document.getElementById('corpoTabelaFornecedores');
+    const formEdicao = document.getElementById('formEdicaoFornecedor');
     const fornecedor = new Fornecedores();
 
     // Evento de pesquisa de CEP
@@ -185,5 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (corpoTabelaFornecedores) {
         fornecedor.listarFornecedores();
+    }
+
+    if (formEdicao) {
+        const btnSalvarEdicao = document.getElementById('btnSalvarEdicaoFornecedor');
+        btnSalvarEdicao.addEventListener('click', async () => {
+            const id = document.getElementById('idFornecedor').value;
+            const fornecedorEdicao = new Fornecedores();
+            await fornecedorEdicao.salvarEdicaoFornecedor(id);
+        });
     }
 });
