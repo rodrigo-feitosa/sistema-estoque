@@ -41,7 +41,7 @@ class Relatorio {
             const cardTotalValorEstoque = document.getElementById('cardTotalValorEstoque');
             if (!cardTotalValorEstoque) return;
 
-            cardTotalValorEstoque.innerHTML = `R$ ${contagemValorEstoque}`;
+            cardTotalValorEstoque.innerHTML = `${parseFloat(contagemValorEstoque).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL'})}`;
         } catch (erro) {
             console.error('Erro ao contar valor de estoque:', erro);
         }
