@@ -148,24 +148,20 @@ header('Content-Type: application/json');
 
 $produto = new Produtos($pdo);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dados = json_decode(file_get_contents("php://input"), true);
-    $acao = $dados['action'] ?? null;
+    $acao = $_GET['acao'] ?? null;
 
-    if ($acao === 'excluir') {
+    if ($acao === 'excluirProduto') {
         $produto->excluirProduto();
-    } elseif ($acao === 'editar') {
+    } elseif ($acao === 'editarProduto') {
         $produto->editarProduto($dados);
-    } elseif ($acao === 'entrada') {
+    } elseif ($acao === 'registrarEntrada') {
         $produto->registrarEntrada($dados);
-    } elseif ($acao === 'saida'){
+    } elseif ($acao === 'registrarSaida'){
         $produto->registrarSaida($dados);   
-    }else {
+    }elseif ($acao === 'cadastrarProduto') {
         $produto->cadastrarProduto($dados);
+    } elseif ($acao === 'listarProdutos') {
+        $produto->listarProdutos();
     }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $produto->listarProdutos();
-} else {
-    echo json_encode(['mensagem' => 'Método não suportado.']);
-}
 ?>

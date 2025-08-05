@@ -11,7 +11,7 @@ class Produto {
         };
 
         try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php', {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=cadastrarProduto', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dados)
@@ -26,7 +26,7 @@ class Produto {
 
     async listarProdutos() {
         try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php');
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=listarProdutos');
             const produtos = await resposta.json();
 
             const corpoTabela = document.getElementById('corpoTabelaProdutos');
@@ -77,7 +77,7 @@ class Produto {
 
     async preencherSelectProdutos(selectId) {
         try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php');
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=listarProdutos');
             const produtos = await resposta.json();
 
             const select = document.getElementById(selectId);
@@ -102,13 +102,12 @@ class Produto {
 
     async registrarEntrada() {
         const dados = {
-            action: 'entrada',
             id_produto: this.id_produto,
             quantidade: this.quantidade
         };
 
         try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php', {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=registrarEntrada', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dados)
@@ -124,13 +123,12 @@ class Produto {
 
     async registrarSaida() {
         const dados = {
-            action: 'saida',
             id_produto: this.id_produto,
             quantidade: this.quantidade
         };
 
         try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php', {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=resgistrarSaida', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dados)
@@ -160,12 +158,12 @@ class Produto {
 
     excluirProduto(id) {
         if (confirm("Tem certeza que deseja excluir esse produto?")) {
-            fetch('../backend/produtos.php', {
+            fetch('/sistema-estoque/backend/produtos.php?acao=excluirProduto', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({ action: 'excluir', id_produto: id })
+                body: JSON.stringify({id_produto: id })
             })
             .then(resposta => resposta.json())
             .then(resultado => {
@@ -180,7 +178,6 @@ class Produto {
 
     editarProduto(id) {
         const dados = {
-            action: 'editar',
             id_produto: id,
             nome: document.getElementById('nomeProduto').value,
             descricao: document.getElementById('descricaoProduto').value,
@@ -190,7 +187,7 @@ class Produto {
             fornecedor: document.getElementById('fornecedor').value
         };
 
-        fetch('../backend/produtos.php', {
+        fetch('/sistema-estoque/backend/produtos.php?acao=editarProduto', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
@@ -205,28 +202,6 @@ class Produto {
         .catch(erro => {
             console.error('Erro ao editar produto:', erro);
         });
-    }
-
-    async listarFornecedores() {
-        try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php');
-            const fornecedores = await resposta.json();
-
-            const selectFornecedor = document.getElementById('fornecedor');
-            if (!selectFornecedor) return;
-
-            selectFornecedor.innerHTML = '';
-
-            fornecedores.forEach(fornecedor => {
-                const option = document.createElement('option');
-                option.value = fornecedor.id;
-                option.textContent = fornecedor.nome;
-                selectFornecedor.appendChild(option);
-            });
-
-        } catch (erro) {
-            console.error('Erro ao listar produtos:', erro);
-        }
     }
 }
 
