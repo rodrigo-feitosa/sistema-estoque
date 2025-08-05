@@ -39,7 +39,11 @@ class Produtos {
     }
 
     public function listarProdutos() {
-        $sql = "SELECT id_produto, nome, descricao, categoria, unidade_medida, preco, qtd_estoque, fornecedor FROM produtos ORDER BY id_produto DESC";
+        $sql = "SELECT p.id_produto, p.nome, p.descricao, c.descricao AS categoria, p.unidade_medida, p.preco, p.qtd_estoque, f.nome_fantasia AS fornecedor
+                FROM produtos p
+                INNER JOIN categorias c ON c.id_categoria = p.categoria
+                INNER JOIN fornecedores f ON f.id_fornecedor = p.fornecedor
+                ORDER BY id_produto DESC";
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();
         $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
