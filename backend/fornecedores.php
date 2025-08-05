@@ -98,3 +98,4 @@
     } else {
         echo json_encode(['mensagem' => 'Método não suportado.']);
     }
+?>

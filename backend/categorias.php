@@ -53,3 +53,4 @@ class Categorias {
      } else {
         echo json_encode(['erro' => 'Ação inválida']);
     }
+?>
