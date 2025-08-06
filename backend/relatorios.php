@@ -4,7 +4,7 @@
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    class Relatorios {
+    class Relatorio {
         private $conexao;
 
         public function __construct($conexao) {
@@ -79,7 +79,7 @@
         }
     }
 
-    $relatorio = new Relatorios($pdo);
+    $relatorio = new Relatorio($pdo);
 
     $acao = $_GET['acao'] ?? null;
 

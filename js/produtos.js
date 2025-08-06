@@ -128,7 +128,7 @@ class Produto {
         };
 
         try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=resgistrarSaida', {
+            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=registrarSaida', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dados)

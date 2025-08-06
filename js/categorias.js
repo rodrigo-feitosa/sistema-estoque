@@ -1,4 +1,4 @@
-class Categorias {
+class Categoria {
     async cadastrarCategoria() {
         const dados = {
             descricao: this.descricao
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formCadastroProduto = document.getElementById('formCadastrarProduto');
     const formEdicaoProduto = document.getElementById('formEditarProduto');
 
-    const categoria = new Categorias();
+    const categoria = new Categoria();
 
     if(formCadastroCategoria) {
         formCadastroCategoria.addEventListener('submit', async (event) => {

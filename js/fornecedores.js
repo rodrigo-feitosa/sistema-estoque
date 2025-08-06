@@ -1,4 +1,4 @@
-class Fornecedores {
+class Fornecedor {
     constructor() {
         window.callback_api = this.callback_api.bind(this);
     }
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formEdicaoProduto = document.getElementById('formEditarProduto');
     const corpoTabelaFornecedores = document.getElementById('corpoTabelaFornecedores');
     const formEdicao = document.getElementById('formEdicaoFornecedor');
-    const fornecedor = new Fornecedores();
+    const fornecedor = new Fornecedor();
 
     // Evento de pesquisa de CEP
     const cepInput = document.getElementById('cepCadastroFornecedor');
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnSalvarEdicao = document.getElementById('btnSalvarEdicaoFornecedor');
         btnSalvarEdicao.addEventListener('click', async () => {
             const id = document.getElementById('idFornecedor').value;
-            const fornecedorEdicao = new Fornecedores();
+            const fornecedorEdicao = new Fornecedor();
             await fornecedorEdicao.salvarEdicaoFornecedor(id);
         });
     }

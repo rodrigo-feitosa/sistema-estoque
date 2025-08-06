@@ -6,7 +6,7 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 header('Content-Type: application/json');
 
-class Categorias {
+class Categoria {
     private $conexao;
 
     public function __construct($pdo) {
@@ -44,11 +44,11 @@ class Categorias {
     $acao = $_GET['acao'] ?? null;
 
     if ($acao === 'listarCategorias') {
-        $categoria = new Categorias($pdo);
+        $categoria = new Categoria($pdo);
         $categoria->listarCategorias();
     } elseif ($acao === 'cadastrarCategoria') {
         $dados = json_decode(file_get_contents('php://input'), true);
-        $novaCategoria = new Categorias($pdo);
+        $novaCategoria = new Categoria($pdo);
         $novaCategoria->cadastrarCategoria($dados);
      } else {
         echo json_encode(['erro' => 'Ação inválida']);

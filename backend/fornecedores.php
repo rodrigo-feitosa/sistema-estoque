@@ -4,7 +4,7 @@
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    class Fornecedores {
+    class Fornecedor {
         private $conexao;
 
         public function __construct($conexao) {
@@ -80,22 +80,19 @@
 
     header('Content-Type: application/json');
 
-    $fornecedor = new Fornecedores($pdo);
+    $fornecedor = new Fornecedor($pdo);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $dados = json_decode(file_get_contents("php://input"), true);
-        $acao = $_GET['acao'] ?? null;
+    $dados = json_decode(file_get_contents("php://input"), true);
+    $acao = $_GET['acao'] ?? null;
 
-        if ($acao === 'cadastrarFornecedor') {
-            $fornecedor->cadastrarFornecedor($dados);
-        } elseif ($acao === 'editarFornecedor') {
-            $fornecedor->salvarEdicaoFornecedor($dados);
-        } else {
-            echo json_encode(['erro' => 'Ação inválida']);
-        }
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($acao === 'cadastrarFornecedor') {
+        $novoFornecedor = new Fornecedor($pdo);
+        $fornecedor->cadastrarFornecedor($dados);
+    } elseif ($acao === 'editarFornecedor') {
+        $fornecedor->salvarEdicaoFornecedor($dados);
+    } elseif ($acao === 'listarFornecedores') {
         $fornecedor->listarFornecedores();
     } else {
-        echo json_encode(['mensagem' => 'Método não suportado.']);
+        echo json_encode(['erro' => 'Ação inválida']);
     }
 ?>
