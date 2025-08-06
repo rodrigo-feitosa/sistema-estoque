@@ -18,39 +18,37 @@ class Categorias {
         }
     }
 
-    listarCategorias(endpoint, selectId) {
-        this.endpoint = endpoint;
-        this.selectElement = document.getElementById(selectId);
-    }
-
-    async carregarCategorias() {
+    async preencherSelect(selectId) {
         try {
-            const response = await fetch(this.endpoint);
-            const categorias = await response.json();
-            this.preencherSelect(categorias);
-        } catch (error) {
-            console.error('Erro ao carregar categorias:', error);
-            this.mostrarErro();
+            const resposta = await fetch('/sistema-estoque/backend/categorias.php?acao=listarCategorias');
+            const categorias = await resposta.json();
+
+            const select = document.getElementById(selectId);
+            if (!select) {
+                console.warn(`Elemento select com id '${selectId}' não encontrado.`);
+                return;
+            }
+
+            // Limpa o select antes de preencher
+            select.innerHTML = '<option value="">Selecione uma categoria</option>';
+
+            categorias.forEach(categoria => {
+                const option = document.createElement('option');
+                option.value = categoria.id_categoria;
+                option.textContent = categoria.descricao;
+                select.appendChild(option);
+            });
+        } catch (erro) {
+            console.error('Erro ao preencher select com fornecedores:', erro);
         }
-    }
-
-    preencherSelect(categorias) {
-        if (!this.selectElement) return;
-
-        this.selectElement.innerHTML = '<option value="">Selecione uma categoria</option>';
-
-        categorias.forEach(cat => {
-            const option = document.createElement('option');
-            option.value = cat.id_categoria;
-            option.textContent = cat.descricao;
-            this.selectElement.appendChild(option);
-        });
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const formCadastroCategoria = document.getElementById('formCadastrarCategoria');
     const formCadastroProduto = document.getElementById('formCadastrarProduto');
+    const formEdicaoProduto = document.getElementById('formEditarProduto');
+
     const categoria = new Categorias();
 
     if(formCadastroCategoria) {
@@ -64,7 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     if(formCadastroProduto) {
-        categoria.listarCategorias('/sistema-estoque/backend/categorias.php?acao=listarCategorias', 'categoriaCadastroProduto');
-        categoria.carregarCategorias();
+        categoria.preencherSelect('categoriaCadastroProduto');
+    }
+
+    if (formEdicaoProduto) {
+        categoria.preencherSelect('categoriaEdicaoProduto');
     }
 });

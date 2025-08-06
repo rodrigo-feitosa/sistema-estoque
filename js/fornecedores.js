@@ -166,35 +166,36 @@ class Fornecedores {
         });
     }
 
-    async carregarFornecedores() {
+    async preencherSelect(selectId) {
         try {
             const resposta = await fetch('/sistema-estoque/backend/fornecedores.php?acao=listarFornecedores');
             const fornecedores = await resposta.json();
 
-            this.selectElement = document.getElementById('fornecedorCadastroProduto');
-            this.preencherSelect(fornecedores);
+            const select = document.getElementById(selectId);
+            if (!select) {
+                console.warn(`Elemento select com id '${selectId}' não encontrado.`);
+                return;
+            }
+
+            // Limpa o select antes de preencher
+            select.innerHTML = '<option value="">Selecione um fornecedor</option>';
+
+            fornecedores.forEach(fornecedor => {
+                const option = document.createElement('option');
+                option.value = fornecedor.id_fornecedor;
+                option.textContent = fornecedor.nome_fantasia;
+                select.appendChild(option);
+            });
         } catch (erro) {
-            console.error('Erro ao carregar fornecedores no select:', erro);
+            console.error('Erro ao preencher select com fornecedores:', erro);
         }
-    }
-
-    preencherSelect(fornecedores) {
-        if (!this.selectElement) return;
-
-        this.selectElement.innerHTML = '<option value="">Selecione um fornecedor</option>';
-
-        fornecedores.forEach(fornecedor => {
-            const option = document.createElement('option');
-            option.value = fornecedor.id_fornecedor;
-            option.textContent = fornecedor.nome_fantasia;
-            this.selectElement.appendChild(option);
-        });
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const formCadastroFornecedor = document.getElementById('formCadastrarFornecedor');
     const formCadastroProduto = document.getElementById('formCadastrarProduto');
+    const formEdicaoProduto = document.getElementById('formEditarProduto');
     const corpoTabelaFornecedores = document.getElementById('corpoTabelaFornecedores');
     const formEdicao = document.getElementById('formEdicaoFornecedor');
     const fornecedor = new Fornecedores();
@@ -230,8 +231,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (formCadastroProduto) {
-        fornecedor.listarFornecedores('/sistema-estoque/backend/fornecedores.php?acao=listarFornecedores', 'fornecedorCadastroProduto');
-        fornecedor.carregarFornecedores();
+        fornecedor.listarFornecedores();
+        fornecedor.preencherSelect('fornecedorCadastroProduto');
+    }
+
+    if (formEdicaoProduto) {
+        fornecedor.listarFornecedores();
+        fornecedor.preencherSelect('fornecedorEdicaoProduto');
     }
 
     if (corpoTabelaFornecedores) {

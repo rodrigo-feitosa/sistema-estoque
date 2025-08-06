@@ -75,7 +75,7 @@ class Produto {
         return linha;
     }
 
-    async preencherSelectProdutos(selectId) {
+    async preencherSelect(selectId) {
         try {
             const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=listarProdutos');
             const produtos = await resposta.json();
@@ -145,12 +145,12 @@ class Produto {
 
     abrirModalEdicao(produto) {
         document.getElementById('idProduto').value = produto.id_produto;
-        document.getElementById('nomeProduto').value = produto.nome;
-        document.getElementById('descricaoProduto').value = produto.descricao;
-        document.getElementById('categoriaProduto').value = produto.categoria;
-        document.getElementById('unidadeMedida').value = produto.unidade_medida;
-        document.getElementById('precoProduto').value = produto.preco;
-        document.getElementById('fornecedor').value = produto.fornecedor;
+        document.getElementById('nomeEdicaoProduto').value = produto.nome;
+        document.getElementById('descricaoEdicaoProduto').value = produto.descricao;
+        document.getElementById('categoriaEdicaoProduto').value = produto.categoria;
+        document.getElementById('unidadeMedidaEdicaoProduto').value = produto.unidade_medida;
+        document.getElementById('precoEdicaoProduto').value = produto.preco;
+        document.getElementById('fornecedorEdicaoProduto').value = produto.fornecedor;
 
         const modal = new bootstrap.Modal(document.getElementById('modalEditar'));
         modal.show();
@@ -247,10 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (selectProdutoEntrada) {
-        produto.preencherSelectProdutos('selectProdutoEntrada');
+        produto.preencherSelect('selectProdutoEntrada');
     }
     if (selectProdutoSaida) {
-        produto.preencherSelectProdutos('selectProdutoSaida');
+        produto.preencherSelect('selectProdutoSaida');
     }
 
     if (formEntrada) {
