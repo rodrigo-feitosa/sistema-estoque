@@ -146,22 +146,22 @@ class Produto {
 
 header('Content-Type: application/json');
 
-    $produto = new Produto($pdo);
+$produto = new Produto($pdo);
 
-    $dados = json_decode(file_get_contents("php://input"), true);
-    $acao = $_GET['acao'] ?? null;
+$dados = json_decode(file_get_contents("php://input"), true);
+$acao = $_GET['acao'] ?? null;
 
-    if ($acao === 'excluirProduto') {
-        $produto->excluirProduto();
-    } elseif ($acao === 'editarProduto') {
-        $produto->editarProduto($dados);
-    } elseif ($acao === 'registrarEntrada') {
-        $produto->registrarEntrada($dados);
-    } elseif ($acao === 'registrarSaida'){
-        $produto->registrarSaida($dados);   
-    }elseif ($acao === 'cadastrarProduto') {
-        $produto->cadastrarProduto($dados);
-    } elseif ($acao === 'listarProdutos') {
-        $produto->listarProdutos();
-    }
+if ($acao === 'excluirProduto') {
+    $produto->excluirProduto();
+} elseif ($acao === 'editarProduto') {
+    $produto->editarProduto($dados);
+} elseif ($acao === 'registrarEntrada') {
+    $produto->registrarEntrada($dados);
+} elseif ($acao === 'registrarSaida'){
+    $produto->registrarSaida($dados);   
+}elseif ($acao === 'cadastrarProduto') {
+    $produto->cadastrarProduto($dados);
+} elseif ($acao === 'listarProdutos') {
+    $produto->listarProdutos();
+}
 ?>

@@ -41,16 +41,17 @@ class Categoria {
     }
 }
 
-    $acao = $_GET['acao'] ?? null;
+$categoria = new Categoria($pdo);
 
-    if ($acao === 'listarCategorias') {
-        $categoria = new Categoria($pdo);
-        $categoria->listarCategorias();
-    } elseif ($acao === 'cadastrarCategoria') {
-        $dados = json_decode(file_get_contents('php://input'), true);
-        $novaCategoria = new Categoria($pdo);
-        $novaCategoria->cadastrarCategoria($dados);
-     } else {
-        echo json_encode(['erro' => 'Ação inválida']);
-    }
+$dados = json_decode(file_get_contents('php://input'), true);
+$acao = $_GET['acao'] ?? null;
+
+if ($acao === 'listarCategorias') {
+    $categoria->listarCategorias();
+} elseif ($acao === 'cadastrarCategoria') {
+    $novaCategoria = new Categoria($pdo);
+    $novaCategoria->cadastrarCategoria($dados);
+    } else {
+    echo json_encode(['erro' => 'Ação inválida']);
+}
 ?>
