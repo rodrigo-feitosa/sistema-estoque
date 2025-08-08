@@ -75,28 +75,57 @@ class Produto {
         return linha;
     }
 
-    async preencherSelect(selectId) {
+    async preencherSelect(selectId, selecionado) {
         try {
-            const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=listarProdutos');
-            const produtos = await resposta.json();
-
             const select = document.getElementById(selectId);
             if (!select) {
                 console.warn(`Elemento select com id '${selectId}' não encontrado.`);
                 return;
             }
 
-            // Limpa o select antes de preencher
-            select.innerHTML = '<option value="">Selecione um produto</option>';
+            select.innerHTML = '<option value="">Selecione uma opção</option>';
 
-            produtos.forEach(produto => {
-                const option = document.createElement('option');
-                option.value = produto.id_produto;
-                option.textContent = produto.nome;
-                select.appendChild(option);
-            });
+            if (selectId === 'categoriaEdicaoProduto') {
+                const resposta = await fetch('/sistema-estoque/backend/categorias.php?acao=listarCategorias');
+                const categorias = await resposta.json();
+
+                categorias.forEach(categoria => {
+                    const option = document.createElement('option');
+                    option.value = categoria.id_categoria;
+                    option.textContent = categoria.descricao;
+
+                    if (categoria.descricao === selecionado) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            } else if (selectId === 'fornecedorEdicaoProduto') {
+                const resposta = await fetch('/sistema-estoque/backend/fornecedores.php?acao=listarFornecedores');
+                const fornecedores = await resposta.json();
+
+                fornecedores.forEach(fornecedor => {
+                    const option = document.createElement('option');
+                    option.value = fornecedor.id_fornecedor;
+                    option.textContent = fornecedor.nome_fantasia;
+
+                    if (fornecedor.nome_fantasia === selecionado) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            } else {
+                const resposta = await fetch('/sistema-estoque/backend/produtos.php?acao=listarProdutos');
+                const produtos = await resposta.json();
+
+                produtos.forEach(produto => {
+                    const option = document.createElement('option');
+                    option.value = produto.id_produto;
+                    option.textContent = produto.nome;
+                    select.appendChild(option);
+                });
+            }
         } catch (erro) {
-            console.error('Erro ao preencher select com produtos:', erro);
+            console.error('Erro ao preencher select:', erro);
         }
     }
 
@@ -142,17 +171,19 @@ class Produto {
         }
     }
 
+    async abrirModalEdicao(produto) {
+        const modal = new bootstrap.Modal(document.getElementById('modalEditar'));
+        if (!modal) return;
 
-    abrirModalEdicao(produto) {
+        await this.preencherSelect('categoriaEdicaoProduto', produto.categoria);
+        await this.preencherSelect('fornecedorEdicaoProduto', produto.fornecedor);
+
         document.getElementById('idProduto').value = produto.id_produto;
         document.getElementById('nomeEdicaoProduto').value = produto.nome;
         document.getElementById('descricaoEdicaoProduto').value = produto.descricao;
-        document.getElementById('categoriaEdicaoProduto').value = produto.categoria;
         document.getElementById('unidadeMedidaEdicaoProduto').value = produto.unidade_medida;
         document.getElementById('precoEdicaoProduto').value = produto.preco;
-        document.getElementById('fornecedorEdicaoProduto').value = produto.fornecedor;
 
-        const modal = new bootstrap.Modal(document.getElementById('modalEditar'));
         modal.show();
     }
 
@@ -179,12 +210,12 @@ class Produto {
     editarProduto(id) {
         const dados = {
             id_produto: id,
-            nome: document.getElementById('nomeProduto').value,
-            descricao: document.getElementById('descricaoProduto').value,
-            categoria: document.getElementById('categoriaProduto').value,
-            unidade_medida: document.getElementById('unidadeMedida').value,
-            preco: document.getElementById('precoProduto').value,
-            fornecedor: document.getElementById('fornecedor').value
+            nome: document.getElementById('nomeEdicaoProduto').value,
+            descricao: document.getElementById('descricaoEdicaoProduto').value,
+            categoria: document.getElementById('categoriaEdicaoProduto').value,
+            unidade_medida: document.getElementById('unidadeMedidaEdicaoProduto').value,
+            preco: document.getElementById('precoEdicaoProduto').value,
+            fornecedor: document.getElementById('fornecedorEdicaoProduto').value
         };
 
         fetch('/sistema-estoque/backend/produtos.php?acao=editarProduto', {
